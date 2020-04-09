@@ -23,6 +23,16 @@ def checkForHA(url):
         return False
     return True
 
+def sysShuttingDown():
+    GPIO.output(LED_SYS, GPIO.LOW)
+    GPIO.output(LED_DAT, GPIO.LOW)
+    GPIO.output(LED_ERR, GPIO.LOW)
+    time.sleep(0.5)
+    GPIO.output(LED_SYS, GPIO.HIGH)
+    GPIO.output(LED_DAT, GPIO.HIGH)
+    GPIO.output(LED_ERR, GPIO.HIGH)
+    time.sleep(0.5)
+
 
 def sysBlinking():
     GPIO.output(LED_SYS, GPIO.HIGH)

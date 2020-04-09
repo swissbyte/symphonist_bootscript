@@ -21,7 +21,26 @@ GPIO.setup(sys.KEY_SYS, GPIO.IN)
 GPIO.setup(sys.KEY_USR, GPIO.IN)
 
 
+def shutdown():
+    command = "/usr/bin/sudo /sbin/shutdown -h now"
+    import subprocess
+    process = subprocess.Popen(command.split(), stdout=subprocess.PIPE)
+    output = process.communicate()[0]
+    print(output)
+
 def buttonPress(*args):
+    timeout = 0
+    print(GPIO.input(sys.KEY_USR))
+    while GPIO.input(sys.KEY_USR) == 0:
+        time.sleep(0.1)
+        timeout = timeout + 1
+        if timeout >= 30:
+            print("shutdown")
+            shutdown()
+            while True:
+                sys.sysShuttingDown()
+
+
     print("ButtonPressed")
 
 
