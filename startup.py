@@ -30,8 +30,6 @@ while GPIO.input(sys.KEY_USR) == 0:
         sys.resetToAPMode()
         exit()
 
-
-
 #start WiFi Hotspot
 sys.startWiFiConfig()
 

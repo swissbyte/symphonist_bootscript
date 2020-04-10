@@ -10,3 +10,12 @@ sudo python -m pip install RPi.GPIO
 
 #using pip with python -m pip
 
+#Prevent random mac: 
+
+Add 
+[device]
+wifi.scan-rand-mac-address=no
+
+to /etc/NetworkManager/NetworkManager.conf
+
+https://www.raspberrypi.org/forums/viewtopic.php?t=237623
