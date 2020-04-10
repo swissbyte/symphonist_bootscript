@@ -7,18 +7,33 @@ import requests
 import SymSys as sys
 from threading import Thread
 
-# Dies ist ein Kommentar
-print("Zeile1")  # noch ein Kommentar
-# print("Zeile2")
-print("Zeile 3")
 
-GPIO.setmode(GPIO.BCM)
-GPIO.setup(sys.LED_SYS, GPIO.OUT)
-GPIO.setup(sys.LED_DAT, GPIO.OUT)
-GPIO.setup(sys.LED_ERR, GPIO.OUT)
-GPIO.setup(sys.LED_ETH, GPIO.OUT)
-GPIO.setup(sys.KEY_SYS, GPIO.IN)
-GPIO.setup(sys.KEY_USR, GPIO.IN)
+
+
+sys.initGPIO()
+
+#GPIO.output(sys.WIFISHDN, GPIO.HIGH)
+#exit()
+#sys.resetWiFi()
+sys.setAllLEDon()
+sys.waitForWifi()
+time.sleep(3)
+
+#check if button was pressed at boot
+#if button was pressed, reset wifi settings
+timeout = 0
+print(GPIO.input(sys.KEY_USR))
+while GPIO.input(sys.KEY_USR) == 0:
+    time.sleep(0.1)
+    timeout = timeout + 1
+    if timeout >= 30:
+        sys.resetToAPMode()
+        exit()
+
+
+
+#start WiFi Hotspot
+sys.startWiFiConfig()
 
 
 def shutdown():
@@ -37,6 +52,7 @@ def buttonPress(*args):
         if timeout >= 30:
             print("shutdown")
             shutdown()
+            sys.animationRun = False
             while True:
                 sys.sysShuttingDown()
 
@@ -48,7 +64,6 @@ GPIO.add_event_detect(sys.KEY_USR, edge=GPIO.FALLING, callback=buttonPress, boun
 
 animation = Thread(target=sys.startupAnimation)
 animation.start()
-
 
 try:
     requests.get("http://gosogle.com")
