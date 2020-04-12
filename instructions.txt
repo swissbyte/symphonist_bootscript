@@ -6,8 +6,6 @@ sudo update-alternatives --install /usr/bin/python python /usr/bin/python3.7 2
 sudo apt-get install python3-pip
 
 sudo python -m pip install RPi.GPIO
-
-
 #using pip with python -m pip
 
 #Prevent random mac: 
@@ -15,7 +13,18 @@ sudo python -m pip install RPi.GPIO
 Add 
 [device]
 wifi.scan-rand-mac-address=no
-
 to /etc/NetworkManager/NetworkManager.conf
-
 https://www.raspberrypi.org/forums/viewtopic.php?t=237623
+
+
+#Run the python script at startup: 
+@reboot sudo python /opt/script/pycharm_project_387/startup.py
+
+#using pip with python -m pip
+
+#follow installation from here: 
+https://www.home-assistant.io/hassio/installation/#alternative-install-home-assistant-supervised-on-a-generic-linux-host
+
+#change hostname to symphonist
+#after that, the symphonist should be available under symphonist.local thanks to avahi mdns
+#homeassistant under symphonist.local:8123
